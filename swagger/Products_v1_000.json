@@ -1,0 +1,342 @@
+{
+  "openapi": "3.0.1",
+  "servers": [
+    {
+      "description": "API para a entidade Produtos para o curso de de desenvolvimento TLPP e POUI",
+      "url": "{{host}}/api/curso/v1",
+      "variables": {
+        "serverUrl": {
+          "default": "localhost"
+        },
+        "serverHttpPort": {
+          "default": "8051"
+        }
+      }
+    }
+  ],
+  "info": {
+    "description": "API para a entidade Produtos para o curso de de desenvolvimento TLPP e POUI",
+    "version": "1.000",
+    "title": "Produtos",
+    "contact": {
+      "name": "T-Talk",
+      "url": "api.totvs.com.br",
+      "email": "comiteintegracao@totvs.com.br"
+    },
+    "x-totvs": {
+      "messageDocumentation": {
+        "name": "Products",
+        "description": "Produtos",
+        "segment": "Universidade TOTVS"
+      },
+      "productInformation": [
+        {
+          "product": "Protheus",
+          "contact": "teste@totvs.com.br",
+          "description": "Cadastro de Produtos - Curso TLPP POUI.",
+          "adapter": "MATA087.prw",
+          "helpUrl": ""
+        }
+      ]
+    }
+  },
+  "paths": {
+    "/products": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Retorna todos os Produtos do sistema",
+        "x-totvs": {
+          "productInformation": [
+            {
+              "product": "Protheus",
+              "available": true,
+              "note": "Este verbo está disponível para o Protheus.",
+              "minimalVersion": "12.1.21"
+            }
+          ]
+        },
+        "description": "Retorna todos os Produtos do sistema",
+        "operationId": "getProducts",
+        "parameters": [
+          {
+            "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/parameters/Authorization"
+          },
+          {
+            "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/parameters/Order"
+          },
+          {
+            "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/parameters/Page"
+          },
+          {
+            "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/parameters/PageSize"
+          },
+          {
+            "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/parameters/Fields"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./Products_1_000.json#/definitions/PagedProducts"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Registro não encontrado!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/definitions/ErrorModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Products"],
+        "summary": "Adiciona Produto passado na requisição",
+        "description": "Adiciona Produto passado na requisição",
+        "operationId": "postProduct",
+        "x-totvs": {
+          "productInformation": [
+            {
+              "product": "Protheus",
+              "available": true,
+              "note": "Este verbo está disponível para o Protheus.",
+              "minimalVersion": "12.1.21"
+            }
+          ]
+        },
+        "parameters": [
+          {
+            "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/parameters/Authorization"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./Products_1_000.json#/definitions/PostProduct"
+              }
+            }
+          },
+          "description": "Produto a ser incluído"
+        },
+        "responses": {
+          "201": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./Products_1_000.json#/definitions/PostProduct"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro no momento da Inclusão",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/definitions/ErrorModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{productId}": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Retorna o Produto do sistema através de seu código",
+        "description": "Retorna o Produto do sistema através de seu código",
+        "operationId": "getProductId",
+        "x-totvs": {
+          "productInformation": [
+            {
+              "product": "Protheus",
+              "available": true,
+              "note": "Este verbo está disponível para o Protheus.",
+              "minimalVersion": "12.1.21"
+            }
+          ]
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/productId"
+          },
+          {
+            "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/parameters/Fields"
+          },
+          {
+            "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/parameters/Authorization"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./Products_1_000.json#/definitions/ProductInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Produto não localizado na base",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/definitions/ErrorModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Products"],
+        "summary": "Altera o comprador passado na requisição",
+        "description": "Altera o comprador passado na requisição",
+        "operationId": "putProductId",
+        "x-totvs": {
+          "productInformation": [
+            {
+              "product": "Protheus",
+              "available": true,
+              "note": "Este verbo está disponível para o Protheus.",
+              "minimalVersion": "12.1.21"
+            }
+          ]
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/productId"
+          },
+          {
+            "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/parameters/Authorization"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./Products_1_000.json#/definitions/ProductInfo"
+              }
+            }
+          },
+          "description": "Produto a ser alterado"
+        },
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./Products_1_000.json#/definitions/ProductInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro no momento da alteração",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/definitions/ErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Produto não localizado na base",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/definitions/ErrorModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Products"],
+        "summary": "Exclusão de Produto da base",
+        "description": "Exclusão de Produto da base",
+        "operationId": "DeleteProduct",
+        "x-totvs": {
+          "productInformation": [
+            {
+              "product": "Protheus",
+              "available": true,
+              "note": "Este verbo está disponível para o Protheus.",
+              "minimalVersion": "12.1.21"
+            }
+          ]
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/productId"
+          },
+          {
+            "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/parameters/Authorization"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./Products_1_000.json#/definitions/ProductInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro no momento da eliminação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/definitions/ErrorModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Produto não localizado na base",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/definitions/ErrorModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "productId": {
+        "name": "productId",
+        "in": "path",
+        "required": true,
+        "description": "Identificador Único representando o Produto",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "schemas": {}
+  }
+}

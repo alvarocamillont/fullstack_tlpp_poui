@@ -1,0 +1,198 @@
+{
+  "$schema": "./Products_1_000.json#",
+  "info": {
+    "description": "",
+    "version": "1.000",
+    "title": "Products",
+    "contact": {},
+    "x-totvs": {
+      "transactionDefinition": {
+        "subType": "event",
+        "businessContentType": {
+          "type": "object",
+          "$ref": "#/definitions/ProductInfo"
+        },
+        "returnContentType": {
+          "type": "object",
+          "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/schemas/types/ListOfInternalId_1_000.json#/definitions/ReturnContentWithModelType"
+        }
+      },
+      "messageDocumentation": {
+        "name": "Produtos",
+        "description": "Cadastro de Produtos para curso Universidade.",
+        "segment": "Manufatura"
+      },
+      "productInformation": [
+        {
+          "product": "PROTHEUS",
+          "contact": "test@teste.com",
+          "description": "Cadastro de Produtos.",
+          "adapter": "MATA087.prw"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "PagedProducts": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "https://raw.githubusercontent.com/totvs/ttalk-standard-message/master/jsonschema/apis/types/totvsApiTypesBase.json#/definitions/Paging"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ProductInfo"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "PostProduct": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ProductInfo"
+        }
+      ]
+    },
+    "ProductInfo": {
+      "properties": {
+        "companyInternalId": {
+          "type": "string",
+          "description": "InternalId da chave completa de empresa do produto.",
+          "x-totvs": [
+            {
+              "product": "PROTHEUS",
+              "field": "EMPRESA|SY1.Y1_FILIAL|SY1.Y1_COD",
+              "available": false,
+              "canUpdate": false,
+              "note": "Para o Protheus é esperado que com o cabeçalho da mensagem seja identificado empresa e filial já pelo Framework estando no ambiente (Empresa x Filial) correto."
+            },
+            {
+              "product": "LOGIX",
+              "required": false,
+              "available": false
+            },
+            {
+              "product": "DATASUL",
+              "required": false,
+              "available": false
+            },
+            {
+              "product": "RM",
+              "field": "TVEN.CODCOLIGADA",
+              "required": false,
+              "available": false,
+              "canUpdate": false
+            }
+          ]
+        },
+        "branchId": {
+          "type": "string",
+          "example": "M SP 01",
+          "description": "ID Filial.",
+          "maxLength": 4,
+          "x-totvs": [
+            {
+              "product": "PROTHEUS",
+              "field": "SY1.Y1_FILIAL",
+              "required": true,
+              "type": "Char",
+              "length": "4",
+              "available": false,
+              "canUpdate": false,
+              "description": "Pode ter tamanho variável até 8 com Gestão de Empresa ativado."
+            },
+            {
+              "product": "LOGIX",
+              "required": false,
+              "available": false
+            },
+            {
+              "product": "DATASUL",
+              "required": false,
+              "available": false
+            },
+            {
+              "product": "RM",
+              "field": "TVEN.CODFILIAL",
+              "required": false,
+              "type": "smallint",
+              "available": false,
+              "canUpdate": true
+            }
+          ]
+        },
+        "productId": {
+          "description": "Código do Produto.",
+          "type": "string",
+          "x-totvs": [
+            {
+              "product": "PROTHEUS",
+              "required": true,
+              "field": "SY1.Y1_COD",
+              "note": "Código do Produto no Protheus.",
+              "length": "3",
+              "type": "char",
+              "available": false,
+              "canUpdate": false
+            }
+          ]
+        },
+        "description": {
+          "description": "Nome do Produto.",
+          "type": "string",
+          "x-totvs": [
+            {
+              "product": "PROTHEUS",
+              "required": true,
+              "field": "SY1.Y1_NOME",
+              "length": "40",
+              "type": "char",
+              "available": false,
+              "canUpdate": false,
+              "note": "Nome do usuário no Protheus."
+            }
+          ]
+        },
+        "price": {
+          "description": "Preço.",
+          "type": "number",
+          "x-totvs": [
+            {
+              "product": "PROTHEUS",
+              "required": true,
+              "field": "SY1.Y1_NOME",
+              "length": "40",
+              "type": "char",
+              "available": false,
+              "canUpdate": false,
+              "note": "Nome do usuário no Protheus."
+            }
+          ]
+        },
+        "blocked": {
+          "description": "Bloqueado.",
+          "type": "boolean",
+          "x-totvs": [
+            {
+              "product": "PROTHEUS",
+              "required": true,
+              "field": "SY1.Y1_NOME",
+              "length": "40",
+              "type": "char",
+              "available": false,
+              "canUpdate": false,
+              "note": "Nome do usuário no Protheus."
+            }
+          ]
+        }
+      }
+    }
+  }
+}
